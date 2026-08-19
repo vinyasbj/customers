@@ -3,12 +3,16 @@ import React from 'react'
 import './App.css';
 
 function encode(data) {
+    console.log('[encode] Called with data:', data);
+    debugger;
     const formData = new FormData()
 
     for (const key of Object.keys(data)) {
+        console.log(`[encode] Appending key="${key}", value=`, data[key]);
         formData.append(key, data[key])
     }
 
+    console.log('[encode] Returning FormData');
     return formData
 }
 
@@ -17,6 +21,8 @@ function App() {
         setState] = React.useState({})
 
     const handleChange = (e) => {
+        console.log('[handleChange] Field changed:', e.target.name, '=', e.target.value);
+        debugger;
         setState({
             ...state,
             [e.target.name]: e.target.value
@@ -24,6 +30,8 @@ function App() {
     }
 
     const handleAttachment = (e) => {
+        console.log('[handleAttachment] File selected:', e.target.files[0]?.name);
+        debugger;
         setState({
             ...state,
             [e.target.name]: e.target.files[0]
@@ -32,6 +40,8 @@ function App() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('[handleSubmit] Form submitted, current state:', state);
+        debugger;
         const form = e.target
         fetch('/', {
             method: 'POST',
@@ -39,7 +49,13 @@ function App() {
                 'form-name': form.getAttribute('name'),
                 ...state
             })
-        }).then(() => window.location.assign('/contact-thanks/')).catch((error) => alert(error))
+        }).then(() => {
+            console.log('[handleSubmit] Submission successful, redirecting');
+            window.location.assign('/contact-thanks/');
+        }).catch((error) => {
+            console.error('[handleSubmit] Submission failed:', error);
+            alert(error);
+        })
     }
 
     return (
