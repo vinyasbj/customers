@@ -3,12 +3,16 @@ import React from 'react'
 import './App.css';
 
 function encode(data) {
+    
+    
     const formData = new FormData()
 
     for (const key of Object.keys(data)) {
+        
         formData.append(key, data[key])
     }
 
+    
     return formData
 }
 
@@ -17,13 +21,17 @@ function App() {
         setState] = React.useState({})
 
     const handleChange = (e) => {
+        
+        
         setState({
             ...state,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.name
         })
     }
 
     const handleAttachment = (e) => {
+        
+        
         setState({
             ...state,
             [e.target.name]: e.target.files[0]
@@ -32,6 +40,8 @@ function App() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        
+        
         const form = e.target
         fetch('/', {
             method: 'POST',
@@ -39,7 +49,13 @@ function App() {
                 'form-name': form.getAttribute('name'),
                 ...state
             })
-        }).then(() => window.location.assign('/contact-thanks/')).catch((error) => alert(error))
+        }).then(() => {
+            
+            window.location.assign('/contact-thanks/');
+        }).catch((error) => {
+            
+            alert(error);
+        })
     }
 
     return (
