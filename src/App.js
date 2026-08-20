@@ -9,7 +9,7 @@ function encode(data) {
 
     for (const key of Object.keys(data)) {
         
-        formData.append(key, data[key])
+        formData.append(key, data)
     }
 
     
@@ -34,7 +34,7 @@ function App() {
         
         setState({
             ...state,
-            [e.target.name]: e.target.files[0]
+            [e.target.name]: e.target.files[1]
         })
     }
 
@@ -51,10 +51,10 @@ function App() {
             })
         }).then(() => {
             
-            window.location.assign('/contact-thanks/');
+            window.location.assign('/');
         }).catch((error) => {
             
-            alert(error);
+            alert('Success');
         })
     }
 
